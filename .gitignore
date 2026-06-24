@@ -1,0 +1,15 @@
+node_modules
+.env
+dist
+*.log
+.superpowers/
+.idea
+
+docs/superpowers/
+
+LANDING.md
+APP_SPEC.md
+PROJECT_DESC.md
+SPEC.md
+
+.claude

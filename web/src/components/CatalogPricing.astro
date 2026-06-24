@@ -1,0 +1,40 @@
+---
+import { site } from "../data/site.ts";
+import { catalog } from "../data/fixtures.ts";
+import { tinybarToHbar } from "../lib/format.ts";
+
+const exampleQuery: Record<string, string> = {
+  "spot-price": "symbol=AAPL",
+  quote: "symbol=AAPL",
+  ohlc: "symbol=AAPL&date=2026-06-24",
+};
+---
+<section id="pricing" class="border-t border-border/60">
+  <div class="mx-auto max-w-7xl px-6 py-20 md:py-28">
+    <h2 class="text-3xl font-semibold tracking-tighter md:text-4xl">Catalog and pricing</h2>
+    <p class="mt-4 max-w-[46ch] text-muted">Three products, priced per call in HBAR. This mirrors the live /catalog.</p>
+
+    <div class="mt-12 grid gap-4 md:grid-cols-3">
+      {catalog.products.map((p) => (
+        <div class="reveal flex flex-col rounded-xl border border-border bg-surface p-6">
+          <div class="flex items-baseline justify-between">
+            <span class="font-mono text-sm text-text">{p.id}</span>
+            <span class="font-mono text-sm text-accent">{tinybarToHbar(p.priceAtomic)} HBAR</span>
+          </div>
+          <p class="mt-3 text-sm leading-relaxed text-muted">{p.description}</p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            {Object.keys(p.paramsSchema).map((param) => (
+              <span class="rounded-full border border-border px-2.5 py-0.5 font-mono text-xs text-faint">{param}</span>
+            ))}
+          </div>
+          <a
+            href={`${site.apiBase}/data/${p.id}?${exampleQuery[p.id]}`}
+            class="mt-5 font-mono text-xs text-accent hover:underline"
+          >
+            GET /data/{p.id}
+          </a>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

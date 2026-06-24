@@ -1,0 +1,34 @@
+# x402 Financial Data (Hedera testnet)
+
+> Pay-per-call mock financial market data over the x402 protocol, settled on Hedera testnet in HBAR. No accounts, no API keys. The server holds no key; the blocky402 facilitator pays the network fee.
+
+## Payment
+- protocol: x402, x402Version 2
+- network: hedera:testnet
+- asset: 0.0.0 (HBAR)
+- scheme: exact
+- payTo: 0.0.4515756
+- facilitator feePayer: 0.0.7162784
+- Protected routes return HTTP 402. Payment details are base64 JSON in the `payment-required` response header (fields: scheme, network, amount, asset, payTo, maxTimeoutSeconds, extra.feePayer).
+- To pay, resend the same request with a `payment-signature` header: base64 JSON of the signed payment payload (x402Version 2, the signed transaction in `payload`).
+- On success the server returns 200 plus a `payment-response` header: base64 JSON with `success`, `payer`, `transaction` (the Hedera transaction id), and `network`.
+
+## Endpoints
+- Base URL: http://localhost:4021 (the API runs on a different origin than this website; prepend it to the paths below)
+- GET /catalog : machine-readable product list with prices and param schemas
+- GET /data/:product : paid market data, returns 402 until paid
+
+## Products
+- spot-price : 0.01 HBAR (1000000 tinybar). Params: symbol (required). Last traded price for a symbol.
+- quote : 0.02 HBAR (2000000 tinybar). Params: symbol (required). Best bid/ask with sizes.
+- ohlc : 0.05 HBAR (5000000 tinybar). Params: symbol (required), date (required). Daily OHLC candle.
+
+## Client (if you don't use x402-sign or other tool)
+- Install: pnpm add @x402/fetch @x402/hedera @x402/core
+- Use wrapFetchWithPayment(fetch, client) with x402Client().register("hedera:*", new ExactHederaScheme(signer)).
+- The signer is a funded Hedera testnet account created with createClientHederaSigner(id, PrivateKey.fromStringECDSA(key), { network: "hedera:testnet" }).
+- Get test HBAR from the Hedera Portal.
+
+## Notes
+- Testnet demo. Data is deterministic mock, not real market data.
+- Settlement runs after the response returns 200.

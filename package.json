@@ -1,0 +1,29 @@
+{
+  "name": "x402-financial-data-server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/server/index.ts",
+    "start": "tsx src/server/index.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "e2e": "tsx scripts/e2e-pay.ts"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.13.0",
+    "@x402/core": "2.16.0",
+    "@x402/fetch": "2.16.0",
+    "@x402/hedera": "2.16.0",
+    "@x402/hono": "2.16.0",
+    "dotenv": "^16.4.0",
+    "hono": "^4.6.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0",
+    "vitest": "^2.1.0"
+  }
+}

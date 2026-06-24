@@ -1,0 +1,58 @@
+---
+import { site } from "../data/site.ts";
+import { response402 } from "../data/fixtures.ts";
+import CodeBlock from "./CodeBlock.astro";
+import { Icon } from "astro-icon/components";
+
+const json402 = JSON.stringify(response402, null, 2);
+---
+<section id="agents" class="border-t border-border/60">
+  <div class="mx-auto max-w-7xl px-6 py-20 md:py-28">
+    <span class="font-mono text-xs uppercase tracking-[0.18em] text-accent">Built for autonomous clients</span>
+    <h2 class="mt-4 max-w-[20ch] text-3xl font-semibold tracking-tighter md:text-4xl">
+      Everything an agent needs to discover and pay.
+    </h2>
+
+    <div class="mt-12 grid gap-4 md:grid-cols-3">
+      <div class="reveal rounded-xl border border-border bg-surface p-6 md:row-span-2">
+        <div class="flex items-center gap-2 text-muted">
+          <Icon name="ph:brackets-curly-bold" class="size-4 text-accent" />
+          <span class="font-mono text-xs">self-describing 402</span>
+        </div>
+        <p class="mt-3 text-sm leading-relaxed text-muted">
+          Every protected route answers 402 with the price, asset, and payTo. No out-of-band docs required.
+        </p>
+        <div class="mt-4">
+          <CodeBlock code={json402} lang="json" label="payment-required (decoded)" />
+        </div>
+      </div>
+
+      <a href="/llms.txt" class="reveal group rounded-xl border border-border bg-surface p-6 transition hover:border-accent/50">
+        <div class="flex items-center gap-2 text-muted">
+          <Icon name="ph:file-text-bold" class="size-4 text-accent" />
+          <span class="font-mono text-xs">/llms.txt</span>
+        </div>
+        <p class="mt-3 text-sm leading-relaxed text-muted">Plain-Markdown guide: what the API is, endpoints, prices, network, client library.</p>
+        <span class="mt-4 inline-block text-sm text-accent">Open llms.txt</span>
+      </a>
+
+      <a href={`${site.apiBase}/catalog`} class="reveal group rounded-xl border border-border bg-surface p-6 transition hover:border-accent/50">
+        <div class="flex items-center gap-2 text-muted">
+          <Icon name="ph:list-bullets-bold" class="size-4 text-accent" />
+          <span class="font-mono text-xs">GET /catalog</span>
+        </div>
+        <p class="mt-3 text-sm leading-relaxed text-muted">Live machine-readable product list with prices and param schemas.</p>
+        <span class="mt-4 inline-block text-sm text-accent">View catalog</span>
+      </a>
+
+      <div class="reveal rounded-xl border border-border bg-surface-2 p-6 md:col-span-2">
+        <div class="grid grid-cols-2 gap-4 font-mono text-sm sm:grid-cols-4">
+          <div><div class="text-faint text-xs">network</div><div class="mt-1">{site.network}</div></div>
+          <div><div class="text-faint text-xs">asset</div><div class="mt-1">{site.asset} (HBAR)</div></div>
+          <div><div class="text-faint text-xs">scheme</div><div class="mt-1">exact</div></div>
+          <div><div class="text-faint text-xs">x402Version</div><div class="mt-1">{site.x402Version}</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

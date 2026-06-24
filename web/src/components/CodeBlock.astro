@@ -1,0 +1,36 @@
+---
+interface Props {
+  code: string;
+  lang?: string;
+  label?: string;
+}
+const { code, lang = "", label } = Astro.props;
+---
+<div class="group relative overflow-hidden rounded-xl border border-border bg-surface">
+  {label && (
+    <div class="flex items-center justify-between border-b border-border px-4 py-2">
+      <span class="font-mono text-xs text-faint">{label}</span>
+      <span class="font-mono text-[10px] uppercase tracking-wider text-faint">{lang}</span>
+    </div>
+  )}
+  <button
+    type="button"
+    data-copy
+    class="absolute right-3 top-3 rounded-md border border-border bg-surface-2 px-2 py-1 font-mono text-[11px] text-muted opacity-0 transition hover:text-accent group-hover:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:opacity-100"
+  >
+    Copy
+  </button>
+  <pre class="overflow-x-auto p-4 font-mono text-[13px] leading-relaxed text-text"><code>{code}</code></pre>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>("[data-copy]").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const code = btn.parentElement?.querySelector("code")?.textContent ?? "";
+      await navigator.clipboard.writeText(code);
+      const prev = btn.textContent;
+      btn.textContent = "Copied";
+      window.setTimeout(() => (btn.textContent = prev), 1400);
+    });
+  });
+</script>

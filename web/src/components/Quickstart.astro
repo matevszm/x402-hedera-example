@@ -1,0 +1,50 @@
+---
+import CodeBlock from "./CodeBlock.astro";
+import { site } from "../data/site.ts";
+
+const snippet = `import { wrapFetchWithPayment } from "@x402/fetch";
+import { createClientHederaSigner, PrivateKey } from "@x402/hedera";
+import { ExactHederaScheme } from "@x402/hedera/exact/client";
+import { x402Client } from "@x402/core/client";
+
+const signer = createClientHederaSigner(
+  process.env.HEDERA_CLIENT_ID,
+  PrivateKey.fromStringECDSA(process.env.HEDERA_CLIENT_KEY),
+  { network: "${site.network}" },
+);
+
+const client = new x402Client().register("hedera:*", new ExactHederaScheme(signer));
+const pay = wrapFetchWithPayment(fetch, client);
+
+const res = await pay("${site.apiBase}/data/spot-price?symbol=AAPL");
+console.log(await res.json());`;
+
+const steps = [
+  { t: "Install the client", d: "Add the x402 fetch wrapper and the Hedera scheme." },
+  { t: "Create a signer", d: "Use a funded testnet account. The signer pays only the data price." },
+  { t: "Call and get data", d: "Wrap fetch. The 402 to pay to 200 flow happens automatically." },
+];
+---
+<section id="quickstart" class="border-t border-border/60">
+  <div class="mx-auto grid max-w-7xl gap-12 px-6 py-20 md:grid-cols-2 md:py-28">
+    <div>
+      <h2 class="text-3xl font-semibold tracking-tighter md:text-4xl">Quickstart</h2>
+      <p class="mt-4 max-w-[46ch] text-muted">From zero to a paid request in three steps.</p>
+      <ol class="mt-8 flex flex-col gap-6">
+        {steps.map((s, i) => (
+          <li class="flex gap-4">
+            <span class="mt-0.5 font-mono text-sm text-accent">{String(i + 1).padStart(2, "0")}</span>
+            <div>
+              <div class="font-medium">{s.t}</div>
+              <p class="mt-1 text-sm leading-relaxed text-muted">{s.d}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+    <div class="reveal self-start">
+      <CodeBlock code={snippet} lang="ts" label="pay.ts" />
+      <p class="mt-3 text-xs text-faint">Install: pnpm add @x402/fetch @x402/hedera @x402/core</p>
+    </div>
+  </div>
+</section>

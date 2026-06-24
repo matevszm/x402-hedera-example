@@ -1,0 +1,42 @@
+---
+const routes = [
+  { m: "GET", p: "/catalog", d: "Machine-readable product list" },
+  { m: "GET", p: "/data/:product", d: "Paid market data (402 until paid)" },
+];
+const codes = [
+  { c: "200", d: "Data returned after payment settles" },
+  { c: "400", d: '{"error":"Missing required param: symbol"}' },
+  { c: "402", d: "Payment required, details in payment-required header" },
+  { c: "404", d: '{"error":"Unknown product: <id>"}' },
+];
+---
+<section class="border-t border-border/60 reveal">
+  <div class="mx-auto max-w-7xl px-6 py-20 md:py-28">
+    <h2 class="text-3xl font-semibold tracking-tighter md:text-4xl">Endpoint reference</h2>
+    <div class="mt-12 grid gap-12 md:grid-cols-2">
+      <div>
+        <div class="font-mono text-xs uppercase tracking-wider text-faint">routes</div>
+        <ul class="mt-4 divide-y divide-border/60">
+          {routes.map((r) => (
+            <li class="flex items-baseline gap-3 py-3 font-mono text-sm">
+              <span class="shrink-0 text-accent">{r.m}</span>
+              <span class="shrink-0 text-text">{r.p}</span>
+              <span class="ml-auto min-w-0 break-words text-right text-xs text-faint">{r.d}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <div class="font-mono text-xs uppercase tracking-wider text-faint">status codes</div>
+        <ul class="mt-4 divide-y divide-border/60">
+          {codes.map((s) => (
+            <li class="flex items-baseline gap-3 py-3 font-mono text-sm">
+              <span class="shrink-0 text-accent">{s.c}</span>
+              <span class="min-w-0 break-all text-xs text-muted">{s.d}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,24 @@
+---
+import Button from "./Button.astro";
+import FlowDiagram from "./FlowDiagram.astro";
+---
+<section id="top" class="relative mx-auto max-w-7xl px-6 pt-20 pb-24 md:pt-24">
+  <div class="grid items-center gap-12 md:grid-cols-2">
+    <div>
+      <span class="font-mono text-xs uppercase tracking-[0.18em] text-accent">x402 on Hedera testnet</span>
+      <h1 class="mt-5 text-4xl font-semibold tracking-tighter md:text-6xl md:leading-[1.02]">
+        Pay-per-call market data for agents.
+      </h1>
+      <p class="mt-5 max-w-[48ch] text-lg leading-relaxed text-muted">
+        No accounts, no API keys. Agents pay per request over x402, settled in HBAR. The server holds no key.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <Button href="#quickstart">Quickstart</Button>
+        <Button href="#agents" variant="ghost">For AI agents</Button>
+      </div>
+    </div>
+    <div class="reveal">
+      <FlowDiagram />
+    </div>
+  </div>
+</section>

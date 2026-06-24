@@ -1,0 +1,34 @@
+---
+import { site } from "../data/site.ts";
+---
+<section class="border-t border-border/60 reveal">
+  <div class="mx-auto max-w-7xl px-6 py-20 md:py-28">
+    <h2 class="max-w-[20ch] text-3xl font-semibold tracking-tighter md:text-4xl">
+      The server never holds a key.
+    </h2>
+    <div class="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+      <div>
+        <div class="font-mono text-xs text-faint">network</div>
+        <div class="mt-2 font-mono text-lg">{site.network}</div>
+        <p class="mt-2 text-sm leading-relaxed text-muted">Hedera testnet. Asset is HBAR ({site.asset}).</p>
+      </div>
+      <div>
+        <div class="font-mono text-xs text-faint">facilitator</div>
+        <div class="mt-2 font-mono text-lg">blocky402</div>
+        <p class="mt-2 text-sm leading-relaxed text-muted">Fee-payer {site.feePayer} covers the network fee.</p>
+      </div>
+      <div>
+        <div class="font-mono text-xs text-faint">custody</div>
+        <div class="mt-2 font-mono text-lg">none</div>
+        <p class="mt-2 text-sm leading-relaxed text-muted">The server signs nothing. The client signs its own transfer.</p>
+      </div>
+      <div>
+        <div class="font-mono text-xs text-faint">test HBAR</div>
+        <div class="mt-2 font-mono text-lg">faucet</div>
+        <p class="mt-2 text-sm leading-relaxed text-muted">
+          Fund a testnet account at the <a href={site.faucetUrl} class="text-accent hover:underline">Hedera Portal</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

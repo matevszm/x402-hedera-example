@@ -1,0 +1,19 @@
+---
+import { site } from "../data/site.ts";
+const links = [
+  { label: "GitHub", href: site.repoUrl },
+  { label: "x402 docs", href: site.x402DocsUrl },
+  { label: "llms.txt", href: "/llms.txt" },
+  { label: "Catalog", href: `${site.apiBase}/catalog` },
+];
+---
+<footer class="border-t border-border/60">
+  <div class="mx-auto flex max-w-7xl flex-col gap-4 px-6 py-10 sm:flex-row sm:items-center sm:justify-between">
+    <span class="font-mono text-sm text-faint">x402 / hedera testnet demo</span>
+    <nav class="flex flex-wrap gap-6">
+      {links.map((l) => (
+        <a href={l.href} class="text-sm text-muted transition hover:text-text">{l.label}</a>
+      ))}
+    </nav>
+  </div>
+</footer>
