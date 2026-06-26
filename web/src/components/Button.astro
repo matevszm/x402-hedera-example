@@ -5,11 +5,11 @@ interface Props {
 }
 const { href, variant = "primary" } = Astro.props;
 const base =
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full px-5 py-2.5 text-sm font-medium transition-transform duration-150 active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent";
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-200 active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent";
 const styles =
   variant === "primary"
-    ? "bg-accent text-bg hover:bg-accent-dim"
-    : "border border-border bg-surface text-text hover:border-accent/50";
+    ? "bg-accent text-bg hover:bg-accent-dim shadow-[0_8px_28px_-10px_rgb(52_211_153/0.6)] hover:shadow-[0_12px_36px_-8px_rgb(52_211_153/0.7)]"
+    : "border border-border bg-surface/60 text-text backdrop-blur hover:border-accent/50 hover:bg-surface";
 ---
 <a href={href} class={`${base} ${styles}`}>
   <slot />

@@ -1,23 +1,27 @@
 ---
 import Button from "./Button.astro";
 import FlowDiagram from "./FlowDiagram.astro";
+import { Icon } from "astro-icon/components";
 ---
 <section id="top" class="relative mx-auto max-w-7xl px-6 pt-20 pb-24 md:pt-24">
   <div class="grid items-center gap-12 md:grid-cols-2">
     <div>
-      <span class="font-mono text-xs uppercase tracking-[0.18em] text-accent">x402 on Hedera testnet</span>
-      <h1 class="mt-5 text-4xl font-semibold tracking-tighter md:text-6xl md:leading-[1.02]">
-        Pay-per-call market data for agents.
+      <span class="fade-up inline-flex items-center gap-2 rounded-full border border-border bg-surface/60 px-3 py-1 font-mono text-xs uppercase tracking-[0.18em] text-accent backdrop-blur" style="animation-delay:0ms">
+        <Icon name="ph:lightning-bold" class="size-3.5" />
+        x402 on Hedera testnet
+      </span>
+      <h1 class="fade-up mt-5 text-4xl font-semibold tracking-tighter md:text-6xl md:leading-[1.02]" style="animation-delay:80ms">
+        <span class="text-accent">Pay-per-call</span> market data for agents.
       </h1>
-      <p class="mt-5 max-w-[48ch] text-lg leading-relaxed text-muted">
+      <p class="fade-up mt-5 max-w-[48ch] text-lg leading-relaxed text-muted" style="animation-delay:160ms">
         No accounts, no API keys. Agents pay per request over x402, settled in HBAR. The server holds no key.
       </p>
-      <div class="mt-8 flex flex-wrap gap-3">
+      <div class="fade-up mt-8 flex flex-wrap gap-3" style="animation-delay:240ms">
         <Button href="#quickstart">Quickstart</Button>
         <Button href="#agents" variant="ghost">For AI agents</Button>
       </div>
     </div>
-    <div class="reveal">
+    <div class="fade-up" style="animation-delay:320ms">
       <FlowDiagram />
     </div>
   </div>

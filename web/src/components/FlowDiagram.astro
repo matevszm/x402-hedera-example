@@ -1,25 +1,37 @@
 ---
-const nodes = [
-  { id: "req", label: "GET /data", sub: "client request" },
-  { id: "pay", label: "402 0.01 HBAR", sub: "self-describing" },
-  { id: "sign", label: "sign tx", sub: "facilitator pays fee" },
-  { id: "ok", label: "200 + data", sub: "settle on Hedera" },
+const rows = [
+  { dir: "out", method: "GET", text: "/data/spot-price?symbol=AAPL", note: "client request, no key" },
+  { dir: "in", status: "402", text: "payment required", note: "0.01 HBAR · payTo 0.0.4515756" },
+  { dir: "out", method: "SIGN", text: "transfer 0.01 HBAR", note: "facilitator pays the network fee" },
+  { dir: "in", status: "200", text: '{ "price": 312.87 }', note: "settled on Hedera" },
 ];
 ---
-<div class="relative w-full" data-flow>
-  <div class="flex flex-col gap-3">
-    {nodes.map((n, i) => (
-      <div class="flex flex-col gap-3">
-        <div
-          data-node={i}
-          class="flow-node rounded-xl border border-border bg-surface px-4 py-3 transition-colors duration-300"
-        >
-          <div class="font-mono text-sm text-text">{n.label}</div>
-          <div class="font-mono text-xs text-faint">{n.sub}</div>
+<div
+  class="relative w-full overflow-hidden rounded-2xl border border-border bg-surface/70 shadow-[0_24px_60px_-24px_rgb(0_0_0/0.7)] backdrop-blur"
+  data-flow
+>
+  <div class="flex items-center gap-2 border-b border-border px-4 py-3">
+    <span class="size-2.5 rounded-full bg-border"></span>
+    <span class="size-2.5 rounded-full bg-border"></span>
+    <span class="size-2.5 rounded-full bg-border"></span>
+    <span class="ml-2 font-mono text-xs text-faint">agent &rarr; x402.hedera</span>
+  </div>
+
+  <div class="flex flex-col gap-2 p-4">
+    {rows.map((r, i) => (
+      <div
+        data-node={i}
+        class="flow-row rounded-lg border border-transparent px-3 py-2.5 transition-colors duration-300"
+      >
+        <div class="flex items-baseline gap-2.5 font-mono text-sm">
+          <span class={r.dir === "out" ? "text-faint" : "text-accent"}>{r.dir === "out" ? "→" : "←"}</span>
+          {r.method && <span class="text-muted">{r.method}</span>}
+          {r.status && (
+            <span class={r.status === "200" ? "text-accent" : "text-text"}>{r.status}</span>
+          )}
+          <span class="min-w-0 break-all text-text">{r.text}</span>
         </div>
-        {i < nodes.length - 1 && (
-          <div class="ml-5 h-5 w-px bg-border" data-edge={i}></div>
-        )}
+        <div class="mt-1 pl-6 font-mono text-xs text-faint">{r.note}</div>
       </div>
     ))}
   </div>
@@ -31,18 +43,18 @@ const nodes = [
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const root = document.querySelector<HTMLElement>("[data-flow]");
   if (root) {
-    const nodes = root.querySelectorAll<HTMLElement>("[data-node]");
-    const active = "border-accent/70 bg-surface-2";
+    const rows = root.querySelectorAll<HTMLElement>("[data-node]");
+    const active = "border-accent/60 bg-surface-2";
     if (reduce) {
-      nodes.forEach((n) => n.classList.add(...active.split(" ")));
+      rows.forEach((n) => n.classList.add(...active.split(" ")));
     } else {
-      const tl = gsap.timeline({ repeat: -1, repeatDelay: 1.1 });
-      nodes.forEach((n) => {
+      const tl = gsap.timeline({ repeat: -1, repeatDelay: 1.2 });
+      rows.forEach((n) => {
         tl.call(() => {
-          nodes.forEach((m) => m.classList.remove(...active.split(" ")));
+          rows.forEach((m) => m.classList.remove(...active.split(" ")));
           n.classList.add(...active.split(" "));
         });
-        tl.to({}, { duration: 0.7 });
+        tl.to({}, { duration: 0.8 });
       });
     }
   }

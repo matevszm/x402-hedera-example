@@ -16,7 +16,7 @@ const exampleQuery: Record<string, string> = {
 
     <div class="mt-12 grid gap-4 md:grid-cols-3">
       {catalog.products.map((p) => (
-        <div class="reveal flex flex-col rounded-xl border border-border bg-surface p-6">
+        <div class="reveal card-glow flex flex-col rounded-xl border border-border bg-surface p-6">
           <div class="flex items-baseline justify-between">
             <span class="font-mono text-sm text-text">{p.id}</span>
             <span class="font-mono text-sm text-accent">{tinybarToHbar(p.priceAtomic)} HBAR</span>

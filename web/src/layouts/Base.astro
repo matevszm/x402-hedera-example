@@ -25,6 +25,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     <link rel="alternate" type="text/markdown" href="/llms.txt" title="llms.txt" />
   </head>
   <body class="min-h-[100dvh] bg-bg font-sans text-text antialiased selection:bg-accent/20">
+    <div class="bg-atmosphere" aria-hidden="true"></div>
     <slot />
   </body>
 </html>

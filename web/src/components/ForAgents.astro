@@ -14,7 +14,7 @@ const json402 = JSON.stringify(response402, null, 2);
     </h2>
 
     <div class="mt-12 grid gap-4 md:grid-cols-3">
-      <div class="reveal rounded-xl border border-border bg-surface p-6 md:row-span-2">
+      <div class="reveal card-glow rounded-xl border border-border bg-surface p-6 md:row-span-2">
         <div class="flex items-center gap-2 text-muted">
           <Icon name="ph:brackets-curly-bold" class="size-4 text-accent" />
           <span class="font-mono text-xs">self-describing 402</span>
@@ -27,7 +27,7 @@ const json402 = JSON.stringify(response402, null, 2);
         </div>
       </div>
 
-      <a href="/llms.txt" class="reveal group rounded-xl border border-border bg-surface p-6 transition hover:border-accent/50">
+      <a href="/llms.txt" class="reveal card-glow group rounded-xl border border-border bg-surface p-6 transition hover:border-accent/50">
         <div class="flex items-center gap-2 text-muted">
           <Icon name="ph:file-text-bold" class="size-4 text-accent" />
           <span class="font-mono text-xs">/llms.txt</span>
@@ -36,7 +36,7 @@ const json402 = JSON.stringify(response402, null, 2);
         <span class="mt-4 inline-block text-sm text-accent">Open llms.txt</span>
       </a>
 
-      <a href={`${site.apiBase}/catalog`} class="reveal group rounded-xl border border-border bg-surface p-6 transition hover:border-accent/50">
+      <a href={`${site.apiBase}/catalog`} class="reveal card-glow group rounded-xl border border-border bg-surface p-6 transition hover:border-accent/50">
         <div class="flex items-center gap-2 text-muted">
           <Icon name="ph:list-bullets-bold" class="size-4 text-accent" />
           <span class="font-mono text-xs">GET /catalog</span>

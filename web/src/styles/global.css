@@ -28,6 +28,30 @@ html {
   html { scroll-behavior: auto; }
 }
 
+/* Fixed atmosphere: faint grid fading out + a single emerald glow top-center. */
+.bg-atmosphere {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 42% at 50% -8%, rgb(52 211 153 / 0.16), transparent 70%),
+    radial-gradient(40% 30% at 85% 6%, rgb(16 185 129 / 0.08), transparent 70%);
+}
+
+.bg-atmosphere::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.03) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(120% 70% at 50% 0%, #000 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(120% 70% at 50% 0%, #000 30%, transparent 75%);
+}
+
+/* Scroll-in reveal (native scroll-driven). */
 .reveal {
   opacity: 0;
   transform: translateY(20px);
@@ -40,6 +64,46 @@ html {
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* On-load entrance, staggered via inline animation-delay. Default state is visible. */
+@media (prefers-reduced-motion: no-preference) {
+  .fade-up {
+    opacity: 0;
+    animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; animation: none; }
+}
+
+/* Hover-lit card: brighter border + faint top-edge highlight on hover. */
+.card-glow {
+  position: relative;
+  transition: border-color 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-glow::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(180deg, rgb(52 211 153 / 0.35), transparent 60%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.card-glow:hover::after { opacity: 1; }
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .card-glow:hover { transform: translateY(-2px); }
 }
