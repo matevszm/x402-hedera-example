@@ -1,0 +1,12 @@
+{
+    "name": "x402-signer",
+    "version": "1.0.0",
+    "type": "module",
+    "private": true,
+    "packageManager": "pnpm@10.7.1",
+    "dependencies": {
+        "@x402/core": "^2.16.0",
+        "@x402/hedera": "^2.16.0",
+        "dotenv": "^17.4.2"
+    }
+}
