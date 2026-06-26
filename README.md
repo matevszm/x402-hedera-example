@@ -6,9 +6,19 @@ implementation. The server holds no Hedera key; the **blocky402** facilitator is
 
 ## Paying with an agent
 
-To have an AI agent buy a resource autonomously, run the `x402-pay` skill: it scaffolds a delegated signer (the key stays in `.env`, never in the agent context) and walks the `402 → sign → 200` buy flow. See [Paying as an agent (delegated signing)](#paying-as-an-agent-delegated-signing) for the manual flow.
+An AI agent can buy a resource autonomously while the private key stays out of its
+context. Two ways:
 
-> Planned: rewrite the skill so the byte-signing step runs fully securely via the Hiero CLI instead of a local key in `.env`.
+- **Inside this repo** — use `scripts/x402-sign.ts` directly; see
+  [Paying as an agent (delegated signing)](#paying-as-an-agent-delegated-signing)
+  for the manual `402 → sign → 200` flow.
+- **From anywhere** — run the `x402-pay` skill (`skills/x402-pay/`). It scaffolds the
+  delegated signer in a working dir and walks the agent through the full buy flow.
+
+In both cases the key lives only in `.env`, read by the signer process — never the agent/LLM.
+
+> Planned: move the byte-signing step to the Hiero CLI so signing runs fully securely,
+> replacing the local key in `.env`.
 
 ## Architecture
 
@@ -22,12 +32,20 @@ Swap facilitator: change `FACILITATOR_URL`.
 
 ## Setup
 
-1. `pnpm install`
+1. `pnpm install` — root (API) deps.
 2. Copy `.env.example` to `.env`; set `PAY_TO_ACCOUNT` (receiver, account id only — no key),
    `HEDERA_CLIENT_ID` / `HEDERA_CLIENT_KEY` (funded testnet payer account).
-3. `pnpm test` — offline contract/unit tests.
-4. `pnpm dev` — start the server.
-5. `pnpm e2e` — run a real paid request through blocky402 on testnet.
+
+### API server
+- `pnpm dev` — start the server with hot reload on `http://localhost:4021`.
+- `pnpm start` — run once, no watch.
+- `pnpm test` — offline contract/unit tests.
+- `pnpm e2e` — real paid request through blocky402 on testnet.
+
+### Web (landing + agent docs)
+- `cd web && pnpm install` — web deps (separate Astro package).
+- `pnpm dev` — landing page; also serves `llms.txt` for agents.
+- `pnpm build && pnpm preview` — preview the production build.
 
 ## Catalog
 
