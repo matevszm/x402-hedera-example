@@ -43,7 +43,7 @@ Swap facilitator: change `FACILITATOR_URL`.
 
 ## Setup
 
-This is a pnpm workspace (root = API server, `web/` = Astro landing). Run everything from the repo root.
+This is a pnpm workspace (root = API server, `web/` = Astro landing). Run everything from the repo root. Requires pnpm 10 or 11.
 
 1. `pnpm install` — installs both packages in one shot. No `pnpm approve-builds` needed (build scripts are allowlisted in `pnpm-workspace.yaml`).
 2. Copy `.env.example` to `.env`; set `PAY_TO_ACCOUNT` (receiver, account id only — no key),

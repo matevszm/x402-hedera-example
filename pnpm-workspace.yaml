@@ -1,6 +1,12 @@
 packages:
   - web
 
+allowBuilds:
+  esbuild: true
+  sharp: true
+  protobufjs: true
+  '@tailwindcss/oxide': true
+
 onlyBuiltDependencies:
   - esbuild
   - sharp
