@@ -20,6 +20,17 @@ In both cases the key lives only in `.env`, read by the signer process — never
 > Planned: move the byte-signing step to the Hiero CLI so signing runs fully securely,
 > replacing the local key in `.env`.
 
+### Paying via the Hiero CLI skill
+
+For the Hiero CLI route, install the [`hedera-skills`](https://github.com/hedera-dev/hedera-skills)
+skill from Hedera. It ships x402 support and documents how the agent should pay — so with it
+installed an agent can run the buy flow through the Hiero CLI instead of the local signer.
+
+> **Disclaimer:** the skill supplies the x402 capability and instructions, but the actual flow
+> is driven by the agent. How reliably it works depends on the knowledge the agent is given —
+> via its system prompt, the skill itself, or other context. Treat the skill as the tool, not
+> the guarantee: a well-briefed agent pays smoothly, an under-briefed one may not.
+
 ## Architecture
 
 - `src/core/provider.ts` — the `DataProvider` contract (the deliverable).
@@ -32,7 +43,9 @@ Swap facilitator: change `FACILITATOR_URL`.
 
 ## Setup
 
-1. `pnpm install` — root (API) deps.
+This is a pnpm workspace (root = API server, `web/` = Astro landing). Run everything from the repo root.
+
+1. `pnpm install` — installs both packages in one shot. No `pnpm approve-builds` needed (build scripts are allowlisted in `pnpm-workspace.yaml`).
 2. Copy `.env.example` to `.env`; set `PAY_TO_ACCOUNT` (receiver, account id only — no key),
    `HEDERA_CLIENT_ID` / `HEDERA_CLIENT_KEY` (funded testnet payer account).
 
@@ -43,9 +56,9 @@ Swap facilitator: change `FACILITATOR_URL`.
 - `pnpm e2e` — real paid request through blocky402 on testnet.
 
 ### Web (landing + agent docs)
-- `cd web && pnpm install` — web deps (separate Astro package).
-- `pnpm dev` — landing page; also serves `llms.txt` for agents.
-- `pnpm build && pnpm preview` — preview the production build.
+- `pnpm web:dev` — landing page; also serves `llms.txt` for agents.
+- `pnpm web:build && pnpm web:preview` — preview the production build.
+- `pnpm web:typecheck` — Astro type check.
 
 ## Catalog
 
