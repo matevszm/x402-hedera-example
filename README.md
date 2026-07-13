@@ -12,8 +12,8 @@ context. Two ways:
 - **Inside this repo** — use `scripts/x402-sign.ts` directly; see
   [Paying as an agent (delegated signing)](#paying-as-an-agent-delegated-signing)
   for the manual `402 → sign → 200` flow.
-- **From anywhere** — run the `x402-pay` skill (`skills/x402-pay/`). It scaffolds the
-  delegated signer in a working dir and walks the agent through the full buy flow.
+- **From anywhere** — use the Hiero CLI via the `hedera-skills` skill; see
+  [Paying via the Hiero CLI skill](#paying-via-the-hiero-cli-skill).
 
 In both cases the key lives only in `.env`, read by the signer process — never the agent/LLM.
 
@@ -43,22 +43,22 @@ Swap facilitator: change `FACILITATOR_URL`.
 
 ## Setup
 
-This is a pnpm workspace (root = API server, `web/` = Astro landing). Run everything from the repo root. Requires pnpm 10 or 11.
+This is an npm workspace (root = API server, `web/` = Astro landing). Run everything from the repo root. Requires Node.js ≥20 (npm bundled).
 
-1. `pnpm install` — installs both packages in one shot. No `pnpm approve-builds` needed (build scripts are allowlisted in `pnpm-workspace.yaml`).
+1. `npm install` — installs both packages in one shot; build scripts run automatically.
 2. Copy `.env.example` to `.env`; set `PAY_TO_ACCOUNT` (receiver, account id only — no key),
    `HEDERA_CLIENT_ID` / `HEDERA_CLIENT_KEY` (funded testnet payer account).
 
 ### API server
-- `pnpm dev` — start the server with hot reload on `http://localhost:4021`.
-- `pnpm start` — run once, no watch.
-- `pnpm test` — offline contract/unit tests.
-- `pnpm e2e` — real paid request through blocky402 on testnet.
+- `npm run dev` — start the server with hot reload on `http://localhost:4021`.
+- `npm start` — run once, no watch.
+- `npm test` — offline contract/unit tests.
+- `npm run e2e` — real paid request through blocky402 on testnet.
 
 ### Web (landing + agent docs)
-- `pnpm web:dev` — landing page; also serves `llms.txt` for agents.
-- `pnpm web:build && pnpm web:preview` — preview the production build.
-- `pnpm web:typecheck` — Astro type check.
+- `npm run web:dev` — landing page; also serves `llms.txt` for agents.
+- `npm run web:build && npm run web:preview` — preview the production build.
+- `npm run web:typecheck` — Astro type check.
 
 ## Catalog
 
@@ -89,7 +89,7 @@ PR=$(curl -s -D - -o /dev/null "$URL" \
   | grep -i '^payment-required:' | sed 's/^[^:]*:[[:space:]]*//' | tr -d '\r')
 
 # 2. Delegate signing (key stays in the script)
-SIG=$(printf '%s' "$PR" | pnpm exec tsx scripts/x402-sign.ts)
+SIG=$(printf '%s' "$PR" | npx tsx scripts/x402-sign.ts)
 
 # 3. Retry with the signature: 200 + data, settlement in the payment-response header
 curl -s -i "$URL" -H "payment-signature: $SIG"

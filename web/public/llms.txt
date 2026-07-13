@@ -24,7 +24,7 @@
 - ohlc : 0.05 HBAR (5000000 tinybar). Params: symbol (required), date (required). Daily OHLC candle.
 
 ## Client (if you don't use x402-sign or other tool)
-- Install: pnpm add @x402/fetch @x402/hedera @x402/core
+- Install: npm install @x402/fetch @x402/hedera @x402/core
 - Use wrapFetchWithPayment(fetch, client) with x402Client().register("hedera:*", new ExactHederaScheme(signer)).
 - The signer is a funded Hedera testnet account created with createClientHederaSigner(id, PrivateKey.fromStringECDSA(key), { network: "hedera:testnet" }).
 - Get test HBAR from the Hedera Portal.

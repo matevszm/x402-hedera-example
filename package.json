@@ -10,11 +10,14 @@
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
     "e2e": "tsx scripts/e2e-pay.ts",
-    "web:dev": "pnpm --filter x402-hedera-web dev",
-    "web:build": "pnpm --filter x402-hedera-web build",
-    "web:preview": "pnpm --filter x402-hedera-web preview",
-    "web:typecheck": "pnpm --filter x402-hedera-web typecheck"
+    "web:dev": "npm run dev -w web",
+    "web:build": "npm run build -w web",
+    "web:preview": "npm run preview -w web",
+    "web:typecheck": "npm run typecheck -w web"
   },
+  "workspaces": [
+    "web"
+  ],
   "dependencies": {
     "@hono/node-server": "^1.13.0",
     "@x402/core": "2.16.0",
